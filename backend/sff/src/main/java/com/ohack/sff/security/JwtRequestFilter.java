@@ -1,6 +1,8 @@
 package com.ohack.sff.security;
 
+import com.ohack.sff.service.AdminUserService;
 import com.ohack.sff.service.ClientUserService;
+import com.ohack.sff.service.IAdminUserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -22,7 +25,12 @@ import java.util.logging.Logger;
     private final static Logger LOGGER = Logger.getLogger(JwtRequestFilter.class.getName());
     @Autowired private ClientUserService clientUserService;
     @Autowired private JwtTokenUtil jwtTokenUtil;
+    @Autowired private AdminUserService adminUserService;
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return new AntPathMatcher().match("/admin/token", request.getServletPath());
+    }
     @Override protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
         final String requestTokenHeader = request.getHeader("Authorization");
@@ -46,8 +54,12 @@ import java.util.logging.Logger;
 
         // Once we get the token validate it.
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetails userDetails = this.clientUserService.loadUserByUsername(username);
+            UserDetails userDetails = null;
+            if(request.getServletPath().contains("/admin")){
+                userDetails = this.adminUserService.loadUserByUsername(username);
+            } else {
+                userDetails = this.clientUserService.loadUserByUsername(username);
+            }
             // if token is valid configure Spring Security to manually set
             // authentication
 

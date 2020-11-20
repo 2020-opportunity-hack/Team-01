@@ -22,7 +22,7 @@ import java.util.List;
     @Autowired private JwtTokenUtil jwtTokenUtil;
     @Autowired private ClientUserService clientUserService;
 
-    @GetMapping("/token") public ResponseEntity loginClientUser(@AuthenticationPrincipal OAuth2User oauth2User) {
+    @GetMapping("/token") public ResponseEntity getClientToken(@AuthenticationPrincipal OAuth2User oauth2User) {
         ClientUserDTO clientUserDTO = mapOAuth2UserToUserDTO(oauth2User);
         clientUserService.loginUserByEmail(clientUserDTO);
         final UserDetails userDetails = clientUserService.loadUserByUsername(clientUserDTO.getEmail());

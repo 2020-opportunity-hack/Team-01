@@ -4,15 +4,25 @@ import com.ohack.sff.security.JwtRequestFilter;
 import com.ohack.sff.service.CustomOauth2UserService;
 import com.ohack.sff.security.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.ohack.sff.security.OAuth2LoginSuccessHandler;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
     @Autowired
     private CustomOauth2UserService customOauth2UserService;
 
@@ -32,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.antMatcher("/**")
             .authorizeRequests()
-                .antMatchers("/auth/**", "/oauth2/**")
+                .antMatchers("/auth/**", "/oauth2/**", "/admin/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -50,5 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.and()
                // .successHandler(oAuth2LoginSuccessHandler);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("**/admin/**");
     }
 }

@@ -1,8 +1,10 @@
 package com.ohack.sff.service;
 
+import ch.qos.logback.core.net.server.Client;
 import com.ohack.sff.dto.ClientUserDTO;
 import com.ohack.sff.model.ClientUser;
 import com.ohack.sff.repo.ClientUserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,11 +12,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service public class ClientUserService implements UserDetailsService {
 
     @Autowired
     private ClientUserRepository clientUserRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -42,6 +48,19 @@ import java.util.ArrayList;
         }
         clientUserRepository.save(user);
         return user;
+    }
+
+    public List<ClientUserDTO> getAllUsers(){
+        List<ClientUserDTO> clientUserDTOS = new ArrayList<>();
+        clientUserRepository.findAll().forEach(clientUser -> {
+            clientUserDTOS.add(mapClientUserToDTO(clientUser));
+        });
+        return clientUserDTOS;
+    }
+
+    private ClientUserDTO mapClientUserToDTO(ClientUser clientUser){
+        ClientUserDTO clientUserDTO = modelMapper.map(clientUser, ClientUserDTO.class);
+        return clientUserDTO;
     }
 
 

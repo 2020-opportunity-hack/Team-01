@@ -1,0 +1,1 @@
+INSERT INTO admin_user (username, password, authority) VALUES ('admin', 'password', 'ROLE_ADMIN');

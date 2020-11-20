@@ -1,15 +1,25 @@
 package com.ohack.sff.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClientUserDTO implements Serializable {
     private static final long serialVersionUIDLONG = 1L;
     String email;
     String name;
+    @JsonProperty("first_name")
     String firstName;
+    @JsonProperty("last_name")
     String lastName;
+    @JsonProperty("image_url")
     String imageUrl;
+    @JsonIgnore
     String authority;
+    String gender;
 
     public String getEmail() {
         return email;
@@ -57,5 +67,13 @@ public class ClientUserDTO implements Serializable {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
