@@ -1,4 +1,4 @@
-package utils;
+package com.ohack.sff.utils;
 
 
 import org.springframework.util.SerializationUtils;
