@@ -30,7 +30,7 @@ public class ClientUserDTO implements Serializable {
     private String mailingAddress;
     @JsonProperty("phone_number")
     private String phoneNumber;
-    @JsonProperty("image_url")
+    @JsonProperty("marital_status")
     private String maritalStatus;
     private String language;
 
