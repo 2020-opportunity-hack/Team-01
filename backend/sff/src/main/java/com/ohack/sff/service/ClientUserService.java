@@ -6,9 +6,11 @@ import com.ohack.sff.model.ClientUser;
 import com.ohack.sff.repo.ClientUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -57,9 +59,23 @@ import java.util.List;
         });
         return clientUserDTOS;
     }
+    public ClientUserDTO getUser(String email){
+        ClientUser clientUser = clientUserRepository.findByEmail(email);
+        return mapClientUserToDTO(clientUser);
+    }
 
     private ClientUserDTO mapClientUserToDTO(ClientUser clientUser){
-        ClientUserDTO clientUserDTO = modelMapper.map(clientUser, ClientUserDTO.class);
+        return modelMapper.map(clientUser, ClientUserDTO.class);
+    }
+    public ClientUserDTO mapOAuth2UserToUserDTO(OAuth2User oauth2User) {
+        ClientUserDTO clientUserDTO = new ClientUserDTO();
+        List<GrantedAuthority> list = new ArrayList<>(oauth2User.getAuthorities());
+        clientUserDTO.setAuthority(list.get(0).getAuthority());
+        clientUserDTO.setEmail(oauth2User.getAttribute("email"));
+        clientUserDTO.setFirstName(oauth2User.getAttribute("given_name"));
+        clientUserDTO.setLastName(oauth2User.getAttribute("family_name"));
+        clientUserDTO.setImageUrl(oauth2User.getAttribute("picture"));
+        clientUserDTO.setName(oauth2User.getAttribute("name"));
         return clientUserDTO;
     }
 

@@ -3,77 +3,35 @@ package com.ohack.sff.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
+@Setter
 public class ClientUserDTO implements Serializable {
     private static final long serialVersionUIDLONG = 1L;
-    String email;
-    String name;
+    private String email;
+    private String name;
     @JsonProperty("first_name")
-    String firstName;
+    private String firstName;
     @JsonProperty("last_name")
-    String lastName;
+    private String lastName;
     @JsonProperty("image_url")
-    String imageUrl;
+    private String imageUrl;
     @JsonIgnore
-    String authority;
-    String gender;
+    private String authority;
+    private String gender;
+    private String dob;
+    @JsonProperty("mailing_address")
+    private String mailingAddress;
+    @JsonProperty("phone_number")
+    private String phoneNumber;
+    @JsonProperty("image_url")
+    private String maritalStatus;
+    private String language;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
 }

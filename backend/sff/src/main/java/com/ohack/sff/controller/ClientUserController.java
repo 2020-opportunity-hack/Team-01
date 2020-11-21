@@ -2,8 +2,10 @@ package com.ohack.sff.controller;
 
 import com.ohack.sff.dto.JwtResponseDTO;
 import com.ohack.sff.dto.ClientUserDTO;
+import com.ohack.sff.model.ClientUser;
 import com.ohack.sff.security.JwtTokenUtil;
 import com.ohack.sff.service.ClientUserService;
+import com.ohack.sff.service.CustomOauth2User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -23,26 +25,23 @@ import java.util.List;
     @Autowired private ClientUserService clientUserService;
 
     @GetMapping("/token") public ResponseEntity getClientToken(@AuthenticationPrincipal OAuth2User oauth2User) {
-        ClientUserDTO clientUserDTO = mapOAuth2UserToUserDTO(oauth2User);
+        ClientUserDTO clientUserDTO = clientUserService.mapOAuth2UserToUserDTO(oauth2User);
         clientUserService.loginUserByEmail(clientUserDTO);
         final UserDetails userDetails = clientUserService.loadUserByUsername(clientUserDTO.getEmail());
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponseDTO(token));
     }
 
-    @GetMapping("/update") public String updateClientUser(Authentication authentication) {
-        return "hello";
+    @GetMapping("/profile") public ResponseEntity<ClientUserDTO> updateClientUser(Authentication authentication) {
+        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return ResponseEntity.ok(clientUserService.getUser(userDetails.getUsername()));
     }
 
-    private ClientUserDTO mapOAuth2UserToUserDTO(OAuth2User oauth2User) {
+    @GetMapping("/test") public ClientUserDTO getClient(Authentication authentication) {
         ClientUserDTO clientUserDTO = new ClientUserDTO();
-        List<GrantedAuthority> list = new ArrayList<>(oauth2User.getAuthorities());
-        clientUserDTO.setAuthority(list.get(0).getAuthority());
-        clientUserDTO.setEmail(oauth2User.getAttribute("email"));
-        clientUserDTO.setFirstName(oauth2User.getAttribute("given_name"));
-        clientUserDTO.setLastName(oauth2User.getAttribute("family_name"));
-        clientUserDTO.setImageUrl(oauth2User.getAttribute("picture"));
-        clientUserDTO.setName(oauth2User.getAttribute("name"));
+        clientUserDTO.setName("test");
         return clientUserDTO;
     }
+
+
 }
