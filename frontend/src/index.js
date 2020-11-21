@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import AppRouter from './appRouter/appRouter';
 import createReduxStore from './store';
 import {Provider} from 'react-redux'
+import 'semantic-ui-css/semantic.min.css'
+import './css/scss/blueprint.css'
 import reportWebVitals from './reportWebVitals';
 const store = createReduxStore();
 console.log(store);
