@@ -45,11 +45,17 @@ import java.util.logging.Logger;
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
                 LOGGER.info("Unable to get JWT Token");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, "Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
                 LOGGER.info("JWT Token has expired");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, "JWT Token has expired");
             }
         } else {
             LOGGER.info("JWT Token does not begin with Bearer String");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "No JWT Token sent in request");
         }
 
         // Once we get the token validate it.

@@ -2,6 +2,7 @@ package com.ohack.sff.controller;
 
 import com.ohack.sff.dto.ClientUserDTO;
 import com.ohack.sff.dto.JwtResponseDTO;
+import com.ohack.sff.dto.TransactionDTO;
 import com.ohack.sff.security.JwtTokenUtil;
 import com.ohack.sff.service.ClientUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController @CrossOrigin @RequestMapping("/user") public class ClientUserController {
     @Autowired private JwtTokenUtil jwtTokenUtil;
@@ -32,10 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
         return clientUserService.getUser(userDetails.getUsername());
     }
 
-    @GetMapping("/test") public ClientUserDTO getClient(Authentication authentication) {
-        ClientUserDTO clientUserDTO = new ClientUserDTO();
-        clientUserDTO.setName("test");
-        return clientUserDTO;
+    @GetMapping("/transactions") public List<TransactionDTO> getClientTransactions(Authentication authentication) {
+        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return clientUserService.getTransactions(userDetails.getUsername());
     }
 
 

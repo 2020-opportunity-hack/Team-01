@@ -2,7 +2,9 @@ package com.ohack.sff.service;
 
 import ch.qos.logback.core.net.server.Client;
 import com.ohack.sff.dto.ClientUserDTO;
+import com.ohack.sff.dto.TransactionDTO;
 import com.ohack.sff.model.ClientUser;
+import com.ohack.sff.model.Transaction;
 import com.ohack.sff.repo.ClientUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +66,22 @@ import java.util.List;
         return mapClientUserToDTO(clientUser);
     }
 
+    public List<TransactionDTO> getTransactions(String email){
+        ClientUser clientUser = clientUserRepository.findByEmail(email);
+        List<Transaction> clientTransactions = clientUser.getTransactions();
+        List<TransactionDTO> transactionDTOS = new ArrayList<>();
+        clientTransactions.forEach(clientTransaction -> {
+            transactionDTOS.add(mapTransactionToDTO(clientTransaction));
+        });
+        return transactionDTOS;
+    }
+
     private ClientUserDTO mapClientUserToDTO(ClientUser clientUser){
         return modelMapper.map(clientUser, ClientUserDTO.class);
+    }
+
+    private TransactionDTO mapTransactionToDTO(Transaction transaction){
+        return modelMapper.map(transaction, TransactionDTO.class);
     }
     public ClientUserDTO mapOAuth2UserToUserDTO(OAuth2User oauth2User) {
         ClientUserDTO clientUserDTO = new ClientUserDTO();
