@@ -61,7 +61,7 @@ import java.util.logging.Logger;
         // Once we get the token validate it.
         if (username != null) {
             UserDetails userDetails = null;
-            if(request.getServletPath().contains("/admin")){
+            if(request.getServletPath().contains("/admin") || username.equals("admin")){
                 userDetails = this.adminUserService.loadUserByUsername(username);
                 setSecurityContext(jwtToken, userDetails, request);
             } else {

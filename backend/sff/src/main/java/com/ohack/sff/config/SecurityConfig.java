@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -37,9 +39,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
         return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+            }
+        };
+    }
     @Override
     public void configure(HttpSecurity http) throws Exception {
-
+        http.cors().and().csrf().disable();
         http.antMatcher("/**")
             .authorizeRequests()
                 .antMatchers("/auth/**", "/oauth2/**", "/admin/**")
@@ -50,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2Login()
                 .authorizationEndpoint()
                 .baseUri("/oauth2/authorize")
-                .authorizationRequestRepository(cookieAuthorizationRequestRepository())
+              //  .authorizationRequestRepository(cookieAuthorizationRequestRepository())
                 .and()
                 .redirectionEndpoint()
                 .baseUri("/oauth2/callback/*")
