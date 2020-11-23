@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return new AntPathMatcher().match("/admin/token", request.getServletPath());
+        return new AntPathMatcher().match("/**/token**", request.getServletPath());
     }
     @Override protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 

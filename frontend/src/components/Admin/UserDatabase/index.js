@@ -40,119 +40,6 @@ export class UserDatabase extends Component {
           userData: response.data,
         });
       });
-    //apiCall
-    const data = [
-      {
-        id: "1",
-        name: "prashant",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "11",
-        name: "sidharth jamuar",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "122",
-        name: "rahul khanna",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "14",
-        name: "ramesh sippy",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "51",
-        name: "rakesh roshan",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "143",
-        name: "ram mohan",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "941",
-        name: "pushkar ojha",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "143",
-        name: "chaman khanna",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "531",
-        name: "chunky pandey",
-        age: "18",
-        gender: "male",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-      {
-        id: "12",
-        name: "ananya pandey",
-        age: "18",
-        gender: "female",
-        tokenAvailable: "3000",
-        tokenSpent: "500",
-        tokenDeposit: "988",
-        address:
-          "abcdefadioasdiaj asdjaiodja adsiojdioajsdioajsjd asjjdiojasiodjas",
-      },
-    ];
   }
 
   render() {
@@ -160,33 +47,29 @@ export class UserDatabase extends Component {
     return (
       <div>
         <Card style={{ width: "90%", marginLeft: "5%" }}>
-          <h3>User Database</h3>
+          <h3>User Client's List</h3>
           <table
             className="bp3-html-table bp3-html-table-bordered  bp3-interactive"
             style={{ width: "100%" }}
           >
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Token Available</th>
-                <th>Token Spent</th>
-                <th>Token Deposit</th>
-                <th>Address</th>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Token Balance</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {userData.map((data, index) => (
                 <tr id={index}>
+                  <td>{data.email}</td>
+                  <td>{data.name}</td>
                   <td>{data.first_name}</td>
                   <td>{data.last_name}</td>
-                  <td>{data.name}</td>
-                  <td>{data.tokenAvailable}</td>
-                  <td>{data.tokenSpent}</td>
-                  <td>{data.tokenDeposit}</td>
-                  <td>{data.address}</td>
+                  <td>{data.token_balance}</td>
                   <td>
                     <Tooltip content="View Details" position={Position.RIGHT}>
                       <Icon

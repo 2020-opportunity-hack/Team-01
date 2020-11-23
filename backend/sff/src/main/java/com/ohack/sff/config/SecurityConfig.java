@@ -4,8 +4,10 @@ import com.ohack.sff.security.JwtRequestFilter;
 import com.ohack.sff.service.CustomOauth2UserService;
 import com.ohack.sff.security.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.ohack.sff.security.OAuth2LoginSuccessHandler;
+import org.apache.catalina.filters.CorsFilter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,6 +16,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -48,6 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
@@ -73,8 +79,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("**/admin/**");
-    }
 }
