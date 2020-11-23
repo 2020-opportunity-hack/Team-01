@@ -29,16 +29,23 @@ Our solution for Sunday Friends Foundation Portal will enable the following.
 - Deployment: TODO
 
 ## Challenges we ran into
-TODO
+
+- One of the major challenges we ran into, was the lack of time, as most of the team members were available only on the weekends to work on the project,since all of us were working professionals.
+- Currently we were not able to integrate the UI to the backend for the Client Side as we were facing some issues in the social sign-on redirection after authenticating from the backend and back to the UI. So this is currently a work in progress.
 
 ## Accomplishments that we're proud of
-TODO
+- We had discussed with the NPO Contact Person: James, the problems they were facing with the current application, and realised a lot of improvements can be done on the admin dashboard portal, include the shopping interface in the application instead of google forms
+- We successfully integrated the Admin Dashboard Portal from the UI to the Backend, as all the users doing the social sign-on were displayed successfully on the screen. Some of the issues like CORS, CSRF was handled.
+- We tried to make the app secure by using JWT Based Authentication tokens, which validates the user logging into the portal, making it safe and secure.
 
 ## What we learned
-TODO
+- We learned lot in the security from the backend part, also the backend developers learnt to develop the front-end part.
+- We understood what improvements the application will be needing in future.
 
 ## What's next for Sunday Friends Foundation Portal
-TODO
+- Integrate the UI for the Clients
+- Add features in the UI for the Clients to shop from the application
+- Integrate Admin Features like controlling the stock availability of items in the shopping platform, enable token transfers in a secure way to the clients
 
 ## Contributers
 - [Beni Kayal](https://devpost.com/code-bmk)
